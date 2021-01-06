@@ -12,14 +12,24 @@ def tuning_equation():
     rear_total = float(e_max_r.get()) - rear_min
 
     ans_front.configure(state=NORMAL)
-
-    ans_front.delete(0, 'end')
-    ans_front.insert(0, format((front_total * weight + front_min), '.2f'))
-    ans_front.configure(state=DISABLED)
     ans_rear.config(state=NORMAL)
+    ans_front_sixty.config(state=NORMAL)
+    ans_rear_sixty.config(state=NORMAL)
+
+    ans_rear_sixty.delete(0, 'end')
+    ans_front_sixty.delete(0, 'end')
+    ans_front.delete(0, 'end')
     ans_rear.delete(0, 'end')
+
+    ans_front.insert(0, format((front_total * weight + front_min), '.2f'))
     ans_rear.insert(0, format((rear_total * weight_rear + rear_min), '.2f'))
+    ans_rear_sixty.insert(0, (float(ans_rear.get()) * .6))
+    ans_front_sixty.insert(0, (float(ans_front.get()) * .6))
+
+    ans_front_sixty.config(state=DISABLED)
     ans_rear.config(state=DISABLED)
+    ans_rear_sixty.config(state=DISABLED)
+    ans_front.configure(state=DISABLED)
 
 
 root = Tk()
@@ -86,14 +96,27 @@ labelans.grid(column=0, row=10)
 ans_front = Entry(main_frame, width=10)
 ans_front.config(state=DISABLED)
 ans_front.grid(column=1, row=10)
+
 labelansr = ttk.Label(main_frame, text="Rear: ")
 labelansr.grid(column=0, row=11)
 ans_rear = Entry(main_frame,width=10)
 ans_rear.config(state=DISABLED)
 ans_rear.grid(column=1,row=11)
+
 btn_calc = Button(main_frame, text="Calculate", command=tuning_equation)
 btn_calc.grid(column=0, row=8, pady=5)
 
+ans_front_sixty = Entry(main_frame, width=10)
+ans_rear_sixty = Entry(main_frame, width=10)
+
+lbl_front_sixty = Label(main_frame, text="Front 60% : ").grid(column=0, row=12)
+ans_front_sixty.grid(column=1, row=12)
+
+lbl_rear_sixty = Label(main_frame, text="Rear 60% : ").grid(column=0, row=13)
+ans_rear_sixty.grid(column=1, row=13)
+
+ans_rear_sixty.config(state=DISABLED)
+ans_front_sixty.config(state=DISABLED)
 root.mainloop()
 
 # This was made by github user Roxxoo
